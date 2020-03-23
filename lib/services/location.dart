@@ -15,7 +15,7 @@ class Location {
         desiredAccuracy: LocationAccuracy.lowest,
       );
       _latitude = position.latitude;
-      _latitude = position.longitude;
+      _longitude = position.longitude;
 
       print(position);
     } catch (e) {
