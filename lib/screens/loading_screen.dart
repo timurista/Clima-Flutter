@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:clima/services/location.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -6,16 +8,33 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  bool loading = true;
+  Position position;
+  final loc = Location();
+
+  @override
+  void initState() {
+    super.initState();
+
+    getLocation();
+  }
+
+  void getLocation() async {
+    setState(() {
+      loading = true;
+    });
+    await loc.getCurrentLocation();
+    setState(() {
+      loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            //Get the current location
-          },
-          child: Text('Get Location'),
-        ),
+        child:
+            loading ? Text('loading') : Text(loc.latitude.toStringAsFixed(1)),
       ),
     );
   }
